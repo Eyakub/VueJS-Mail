@@ -8,7 +8,7 @@ import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
 import 'popper.js';
 
-
+export const eventBus = new Vue();
 
 Vue.config.productionTip = false
 
