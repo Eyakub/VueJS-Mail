@@ -57,6 +57,7 @@ export default {
             this.activeView = data.tag;
         });
     },
+    
     data() {
         return {
             activeView: 'app-index',
