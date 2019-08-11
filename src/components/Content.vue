@@ -17,6 +17,7 @@ import Important from './Important.vue';
 import Trash from './Trash.vue';
 import ViewMessage from './ViewMessage.vue';
 import { eventBus } from '../main.js';
+
 export default {
 
     created(){
@@ -54,6 +55,6 @@ export default {
         appImportant: Important,
         appTrash: Trash,
         appViewMessage: ViewMessage,
-    }
+    },
 }
 </script>
