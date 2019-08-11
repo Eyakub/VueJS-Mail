@@ -12,28 +12,28 @@
             <li class="{ active: activeView == 'app-inbox'}">
                 <a href="#" @click.prevent="navigate('app-inbox', 'Inbox')">
                     <i class="fa fa-inbox"></i>Inbox
-                    <span class="badge badge-danger float-right">?</span>
+                    <span class="badge badge-danger float-right">{{ unreadMessages.length }}</span>
                 </a>
             </li>
 
             <li class="{ active: activeView == 'app-sent'}">
                 <a href="#" @click.prevent="navigate('app-sent', 'Sent')">
                     <i class="fa fa-envelope-o"></i>Sent
-                    <span class="badge badge-primary float-right">?</span>
+                    <span class="badge badge-primary float-right">{{ sentMessages.length }}</span>
                 </a>
             </li>
 
             <li class="{ active: activeView == 'app-important'}">
                 <a href="#" @click.prevent="navigate('app-important', 'Important')">
                     <i class="fa fa-bookmark-o"></i>Important
-                    <span class="badge badge-warning float-right">?</span>
+                    <span class="badge badge-warning float-right">{{ importantMessages.length }}</span>
                 </a>
             </li>
 
             <li>
                 <a href="#" @click.prevent="navigate('app-trash', 'Trash')">
                     <i class="fa fa-trash-o"></i>Trash
-                    <span class="badge badge-info float-right">?</span>
+                    <span class="badge badge-info float-right">{{ trashMessages.length }}</span>
                 </a>
             </li>
         </ul>
@@ -45,6 +45,13 @@
 <script>
 import { eventBus } from '../main.js';
 export default {
+    props: {
+        messages: {
+            type: Array,
+            required: true,
+        }
+    },
+
     created(){
         eventBus.$on('changeView', (data)=>{
             this.activeView = data.tag;
@@ -63,6 +70,37 @@ export default {
                 title: title,
             });
         }
+     },
+
+     computed: {
+        unreadMessages(){
+             return this.messages.filter(function(message){
+                 return (message.type == 'incoming' && 
+                        !message.inRead && 
+                        !message.isDeleted);
+             });
+         },
+
+        sentMessages(){
+             return this.messages.filter(function(message){
+                 return (message.type == 'outgoing' && 
+                        !message.isDeleted);
+             });
+         },
+
+        importantMessages(){
+             return this.messages.filter(function(message){
+                 return (message.type == 'incoming' && 
+                        !message.isImportant === true &&
+                        !message.isDeleted);
+             });
+         },
+
+        trashMessages(){
+             return this.messages.filter(function(message){
+                 return !message.isDeleted === true;
+             });
+         },
      }
 }
 </script>
