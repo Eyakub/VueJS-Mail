@@ -92,7 +92,7 @@ export default {
         importantMessages(){
              return this.messages.filter(function(message){
                  return (message.type == 'incoming' && 
-                        !message.isImportant === true &&
+                        message.isImportant === true &&
                         !message.isDeleted);
              });
          },
