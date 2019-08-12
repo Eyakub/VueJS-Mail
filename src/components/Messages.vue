@@ -1,7 +1,7 @@
 <template>
     <table v-if="messages.length > 0" class="table table-inbox table-hover">
         <tbody>
-            <tr v-for="message in messages" 
+            <tr v-for="message in messages" :key="message.subject"
                 :class="{ unread: typeof 
                         message.isRead !== 'undefined' && 
                         !message.isRead }">
